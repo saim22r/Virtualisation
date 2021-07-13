@@ -1,0 +1,22 @@
+# ruby syntax
+
+Vagrant.configure("2") do |config|
+
+ config.vm.box = "ubuntu/xenial64"
+ # using ubuntu
+
+ # Let's connect to nginx using private ip
+ config.vm.network "private_network", ip: "192.168.10.100"
+ # We would like to load this ip using our host machine's browser to view default nginx page
+
+ config.hostsupdater.aliases = ["development.local"]
+ # If the plugin is installed correctly and file is update with vagrant destroy then we should be able to see nginx page
+ # in the browser with http://development.local
+ 
+ # Sync data from localhost to VM
+ config.vm.synced_folder ".", "/home/vagrant/environment"
+ # if you want to sync everything from your current location of vagrantfile, replace the host path with a .
+
+ config.vm.provision "shell", path: "./environment/provision.sh"
+
+end
