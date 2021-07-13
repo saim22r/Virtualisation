@@ -56,7 +56,7 @@ winrm-config    outputs WinRM configuration to connect to the machine
 - Checking status of nginx `sudo systemctl status nginx` 
 - or restart `systemctl restart nginx` or just start `systemctl start nginx`
 
-### Installing plugin
+## Installing plugin
 
 - Step 1: Install the plugin `vagrant plugin install vagrant-hostsupdater`
 
@@ -80,7 +80,7 @@ sudo systemctl status nginx
 
 - Step 8: `vagrant halt` to pause the VM
 
-### Reloading or destroying 
+## Reloading or destroying 
 1. `vagrant reload` 
 2. If vagrant reload doesn't work then `vagrant destroy` and `vagrant up` again
 3. `vagrant ssh` Opens VM
@@ -88,7 +88,7 @@ sudo systemctl status nginx
 5. Go to browser and write `http://development.local`
 
 
-### Automating the task
+## Automating the nginx server
 
 - Create a file called `provision.sh` this is done by typing `sudo nano provision.sh`
 - add `#!/bin/bash` at the top every time
@@ -107,8 +107,44 @@ sudo systemctl status nginx
 - `sudo chmod +x provision.sh` changes permission as admin. Filename turns green when completed.
 - To run it use `sudo ./provision.sh`
 
-### Extra Linux Features
+## Extra Linux Features
 
 - Wildcards * can be used to select everything with certain extension etc, `rm -rf *.txt` will delete all txt files
 - To end a process (ps aux shows list of running processes) use `sudo kill <PID number>`
 - Pike symbol | can be used to search specific files
+
+## Synced Folders
+- Step 1: Create `provision.sh` file and insert the lines from automating nginx above
+- Step 2: Add the following code to the vagrantfile `config.vm.synced_folder " (Path to a directory on host machine) ", "(absolute path of where to share the folder within the guest machine) "`
+or `.` in the first bracket to sync everything from the current location
+Step 3: The following code will run the provision file  `config.vm.provision "shell", path:"./PATH/provision.sh"` 
+
+## Tests and commands
+#### Variables
+- Show all environment variables `env`
+- Create a variable `export name=Saim`
+- Find specific variable `printenv name`
+
+#### Tests 
+On Host machine, inside spec-tests folder
+
+- `gem install bundler to install bundler`
+- `bundle` to run bundle and get dependencies
+- `rake spec` to run tests
+
+On Virtual Machine
+
+- `curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -` and `sudo apt-get install nodejs` installs nodejs version 6
+- `sudo apt-get install python-software-properties` to install all python dependencies
+- `sudo npm install pm2 -g` installing pm2
+- Add an environmental variable permanently `sudo echo 'export DB_HOST=mongodb' >> .profile` use echo or nano.
+
+#### nodejs automation
+- Add all of the commands above to the provision.sh file and run `vagrant reload`
+
+
+
+
+
+
+
