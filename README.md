@@ -125,7 +125,7 @@ Step 3: The following code will run the provision file  `config.vm.provision "sh
 - Create a variable `export name=Saim`
 - Find specific variable `printenv name`
 
-#### Tests 
+## Tests 
 On Host machine, inside spec-tests folder
 
 - `gem install bundler to install bundler`
@@ -142,8 +142,15 @@ On Virtual Machine
 #### nodejs automation
 - Add all of the commands above to the provision.sh file and run `vagrant reload`
 
-
-
+## nginx reverse proxy
+- `cd /etc`
+- `cd nginx`
+- `cd sites-available`
+- `sudo nano default` or `sudo rm -rf default` and remake default file 
+- `sudo nginx -t`
+- `sudo systemctl status nginx`
+- Navigate to app folder `cd`
+- if errors occur kill some files `ps aux` and `sudo kill []` id in brackets
 
 
 

@@ -1,18 +1,16 @@
 Vagrant.configure("2") do |config|
+    
+    config.vm.define "app" do |app|
+        app.vm.box = "ubuntu/xenial64"
+        app.vm.network "private_network", ip: "192.168.10.100"
+        app.hostsupdater.aliases = ["development.local"]
+        app.vm.synced_folder ".", "/home/vagrant/environment"
+        app.vm.provision "shell", path: "./environment/app/provision.sh"
+    end
 
- config.vm.box = "ubuntu/xenial64"
-
- config.vm.network "private_network", ip: "192.168.10.100"
- # Let's connect to nginx using private ip
- # We would like to load this ip using our host machine's browser to view default nginx page
-
- config.hostsupdater.aliases = ["development.local"]
- # If the plugin is installed correctly and file is update with vagrant destroy then we should be able to see nginx page in the browser with http://development.local
- 
- config.vm.synced_folder ".", "/home/vagrant/environment"
- # Sync data from localhost to VM
- # if you want to sync everything from your current location of vagrantfile, replace the host path with a .
-
- config.vm.provision "shell", path: "./environment/provision.sh"
-
+    config.vm.define "db" do |db|
+        db.vm.box = "ubuntu/xenial64"
+        db.vm.network "private_network", ip: "192.168.10.150"
+        db.vm.provision "shell", path: "./environment/db/provision.sh"
+    end
 end
