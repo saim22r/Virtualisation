@@ -11,8 +11,9 @@ sudo apt-get install -y nodejs # Install nodejs and npm
 sudo apt-get install python-software-properties -y # Install python dependencies
 sudo npm install -g pm2 # Uses npm to install pm2 package
 
-sudo rm -rf /etc/nginx/sites-available/default
+sudo rm -rf /etc/nginx/sites-available/default # Delete the default file 
 
+# Rewrite the default file in the sites-available directory
 sudo echo "server{
         listen 80;
         server_name _;
@@ -26,11 +27,11 @@ sudo echo "server{
         }
 }" >> /etc/nginx/sites-available/default
 
-sudo systemctl restart nginx
-sudo systemctl enable nginx
+sudo systemctl restart nginx # Restart nginx 
+sudo systemctl enable nginx # Enable nginx and this should be active sudo systemctl status nginx can check
 
-cd environment/app
-node seeds/seed.js
+cd environment/app # Go back to the app directory to run 
+node seeds/seed.js # Gets the posts for the web
 ~/.source
-npm start
+npm start # Run the web server
 

@@ -153,7 +153,7 @@ On Virtual Machine
 - if errors occur kill some files `ps aux` and `sudo kill []` id in brackets
 
 ## Automating 2 VMs and mongodb installation
-### vagrant file differentiates between the two boxes
+### Vagrant file differentiates between the two boxes
 ```
 Vagrant.configure("2") do |config|
     

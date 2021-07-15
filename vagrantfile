@@ -1,16 +1,19 @@
 Vagrant.configure("2") do |config|
     
-    config.vm.define "app" do |app|
-        app.vm.box = "ubuntu/xenial64"
-        app.vm.network "private_network", ip: "192.168.10.100"
-        app.hostsupdater.aliases = ["development.local"]
-        app.vm.synced_folder ".", "/home/vagrant/environment"
-        app.vm.provision "shell", path: "./environment/app/provision.sh", env: {'DB_HOST' => 'mongodb://192.168.10.150:27017/posts'}
+    config.vm.define "app" do |app| # Creates a new VM called app
+        app.vm.box = "ubuntu/xenial64" # Set the type of box for the VM
+        app.vm.network "private_network", ip: "192.168.10.100" # Set the IP for the nginx for this VM
+        app.hostsupdater.aliases = ["development.local"] # If everything is setup and installed correctly this url should work
+        app.vm.synced_folder ".", "/home/vagrant/environment" # Syncs folder with localhost and VM
+        # Provision file which runs when vargrant up is triggered. Make sure path is correct. 
+        app.vm.provision "shell", path: "./environment/app/provision.sh", env: {'DB_HOST' => 'mongodb://192.168.10.150:27017/posts'} # Sets the environment variable
     end
 
-    config.vm.define "db" do |db|
-        db.vm.box = "ubuntu/xenial64"
-        db.vm.network "private_network", ip: "192.168.10.150"
-        db.vm.provision "shell", path: "./environment/db/provision.sh"
+    config.vm.define "db" do |db| # Creates a new VM called db
+        db.vm.box = "ubuntu/xenial64" # Set the type of box for the VM
+        db.vm.network "private_network", ip: "192.168.10.150" # Set the IP for the nginx for this VM
+        db.vm.provision "shell", path: "./environment/db/provision.sh" # Provision file which runs when vargrant up is triggered.
     end
 end
+
+# Provision files are placed in separate directories
